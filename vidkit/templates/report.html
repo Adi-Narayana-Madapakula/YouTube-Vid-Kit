@@ -1,0 +1,526 @@
+{% load static %}
+{% static "scene_images" as baseUrl %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Mini Project 2 -  YouTube Vid-Kit">
+    <meta name="author" content="Adi Narayana Madapakula">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <title>YouTube Vid⭠Kit</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-grad-school.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/feedback.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/lightbox.css' %}">
+  </head>
+
+<body>
+  <!--header-->
+  <header class="main-header clearfix" role="header">
+    <div class="logo">
+      <a href="{% url 'index' %}"><em>YouTube</em> Vid<em>⭠</em>Kit</a>
+    </div>
+    <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+    <nav id="menu" class="main-nav" role="navigation">
+      <ul class="main-menu">
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li class="has-submenu"><a href="#">Report</a>
+          <ul class="sub-menu">
+            <li><a href="#section1">Video Details</a></li>
+            <li><a href="#section2">Scenes</a></li>
+            <li><a href="#section3">Transcription</a></li>
+            <li><a href="#section4">Video Summary</a></li>
+            <li><a href="#section5">NER Tags</a></li>
+            <li><a href="#section6">Top Keywords</a></li>
+            <li><a href="#section7">Visualizations</a></li>
+          </ul>
+        </li>
+        <li><a href="#section8">Feedback</a></li>
+        <li><a href="#">Download</a></li>
+      </ul>
+    </nav>
+  </header>
+  <section class="section video" data-section="section1">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 align-self-center">
+          <div class="left-content">
+            <h1>Your Video Details :</h1> 
+            {% if video_details %}
+            <table cellpadding="5" cellspacing="1">
+              <style>
+                tr th{
+                  color: #f5a425;
+                }
+                tr td{
+                  color: #00ffc4db;
+                }
+              </style>
+              <tr>
+                <th>Title</th>
+                <td>{{video_details.title}}/td>
+              </tr>
+              <tr>
+                <th>Author</th>
+                <td>{{video_details.author}}</td>
+              </tr>
+              <tr>
+                <th>Video ID</th>
+                <td>{{video_details.videoid}}</td>
+              </tr>
+              <tr>
+                <th><strong>Duration</strong></th>
+                <td><font color="white">HH:MM:SS</font><br>{{video_details.duration}}</td>
+              </tr>
+              <tr>
+                <th>Rating</th>
+                <td>{{video_details.rating}}</td>
+              </tr>
+              <tr>
+                <th>Views</th>
+                <td>{{video_details.viewcount}} views</td>
+              </tr>
+              <tr>
+                <th>Likes </th>
+                <td>{{video_details.likes}} likes</td>
+              </tr>
+              <tr>
+                <th>Dislikes</th>
+                <td>{{video_details.dislikes}} dislikes</td>
+              </tr>
+            </table>
+            {% endif %}
+            <div class="main-button"><a rel="nofollow" href="" target="_parent">Download Report</a></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <article class="video-item">
+            <div class="video-caption"> 
+              <h4><font color="#0a0a0a">Click to Preview Video</font></h4>
+            </div>
+            {% if url %}
+            <figure>
+              <a href="{{url}}" class="play"><img src="{% static 'assets/images/main-thumb.png' %}"></a>
+            </figure>
+            {% endif %}
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section courses" data-section="section2">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <h2>Scenes Detected in the Video</h2>
+          </div>
+        </div>
+        <div class="owl-carousel owl-theme">
+          {% for image,num in scene_images %}
+          <div class="item">
+            <img src="{{baseUrl}}/{{image}}" alt="Scene-Images">
+            <div class="down-content">
+              <h4 align="center">SCENE {{num}}</h4>
+            </div>
+          </div>
+          {% endfor %}
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="section courses" data-section="section3">
+    <div class="container-fluid">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>Video Transcription</h2>
+        </div>
+      </div>
+        <fieldset style="min-height:100px;">
+          {% if transcription %}
+          <legend><b> Video Transcription </b> </legend>
+          <label><font color="black">{{transcription}} </font><br/> </label>
+          <label> <br/> </label>
+          {% endif %}
+        </fieldset>
+    </div>
+</section>
+<section class="section courses" data-section="section4">
+  <div class="container-fluid">
+    <div class="col-md-12">
+      <div class="section-heading">
+        <h2>Summary of Video</h2>
+      </div>
+    </div>
+      <fieldset style="min-height:100px;">
+        {% if Summary %}
+          <legend><b> Video Summary </b> </legend>
+          <label><font color="black">{{Summary}} </font><br/> </label>
+          <label> <br/> </label>
+        {% endif %}
+      </fieldset>
+  </div>
+</section>
+<section class="section courses" data-section="section5">
+    <div class="container-fluid">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>NER Tags</h2>
+        </div>
+      </div>
+      <table class="styled-table">
+          <thead>
+              <tr>
+                  <th><strong><h6>NER Tags</h6></strong></th>
+                  <th><strong><h6>Tag Information</h6></strong></th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for tags,taglist in ner_tags.items %}
+              <tr>
+                  <td><strong>{{tags}}</strong></td>
+                  <td>{{taglist}}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table> 
+    </div>
+</section>
+<section class="section courses" data-section="section5">
+  <div class="container-fluid">
+    <div class="col-md-12">
+      <div class="section-heading">
+        <h2>POS Tags</h2>
+      </div>
+    </div>
+    <table class="styled-table">
+        <thead>
+            <tr>
+              <th><strong>Tag</strong></th>
+              <th><strong>Tag Information</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tags,taglist in pos_tags.items %}
+            <tr>
+                <td><strong>{{tags}}</strong></td>
+                <td>{{taglist}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+</section>
+<section class="section courses" data-section="section6">
+    <div class="container-fluid">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>Top Keywords</h2>
+        </div>
+      </div>
+      <table class="styled-table">
+          <thead>
+              <tr>
+                  <th><h2><strong>Word</h2></strong></th>
+                  <th><strong>Count</strong></th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for words,freq in topwords.items %}
+              <tr>
+                  <td><strong>{{words}}</strong></td>
+                  <td><strong>{{freq}}</strong></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+</section>
+<section class="section video" data-section="section1">
+  <div class="container">
+    <div class="col-md-12">
+      <div class="section-heading">
+        <h2>Top Keywords</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 align-self-center">
+        <div class="left-content">
+          <div class="visualiserow">
+            <div class="visualisecolumn">
+              <h3>POS Tag Frequency Distribution</h3>
+              <img src="{% static 'visualisations/pos.jpg' %}" alt="POS Tagging" style="width:30%" onclick="myFunction(this);">
+            </div>
+            <div class="visualisecolumn">
+              <h3>NER Tag Frequency Distribution</h3>
+              <img src="{% static 'visualisations/ner.jpg' %}" alt="NER Tagging" style="width:30%" onclick="myFunction(this);">
+            </div>
+            <div class="visualisecolumn">
+              <h3>Keyword Frequency Distribution</h3>
+              <img src="{% static 'visualisations/pulse.jpg' %}" alt="Key Words" style="width:30%" onclick="myFunction(this);">
+            </div>
+            <div class="visualisecolumn">
+              <h3>Word Cloud</h3>
+              <img src="{% static 'visualisations/cloud.jpg' %}" alt="Word Cloud" style="width:30%" onclick="myFunction(this);">
+            </div>
+          </div>                 
+        </div>
+      </div>
+      <div class="col-md-6">
+        <article class="video-item">
+          <div class="visualisecontainer">
+            <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+            <img id="expandedImg" style="width:100%">
+            <div id="imgtext" color="#000000"></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  function myFunction(imgs) {
+    var expandImg = document.getElementById("expandedImg");
+    var imgText = document.getElementById("imgtext");
+    expandImg.src = imgs.src;
+    imgText.innerHTML = imgs.alt;
+    expandImg.parentElement.style.display = "block";
+  }
+</script>
+<style>
+  .visualiserow{
+    box-sizing: border-box;
+    margin: 0;
+    font-family: Arial;
+  }
+  .visualisecolumn img {
+    opacity: 0.8; 
+    cursor: pointer; 
+  }
+  
+  .visualisecolumn img:hover {
+    opacity: 1;
+  }
+  
+  /* Clear floats after the columns */
+  .visualiserow:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* The expanding image container */
+  .visualisecontainer {
+    position: relative;
+    display: none;
+  }
+  
+  /* Expanding image text */
+  #imgtext {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+  }
+  
+  /* Closable button inside the expanded image */
+  .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: rgb(0, 0, 0);
+    font-size: 35px;
+    cursor: pointer;
+  }
+</style>
+<section class="section coming-soon" data-section="section8">
+  <center>
+    <div class="container">
+          <div class="continer centerIt">
+            <div>
+              <h4><em>Thanks </em>for using our Application. Your <em>Feedback </em> is really needed. Support Us</h4>
+            </div>
+          </div>
+      <center>
+          <div class="testbox">
+      <form action="feedback" method="POST">
+        {% csrf_token %}
+        <table>
+          <tr>
+            <th class="first-col"></th>
+            <th>Very Good</th>
+            <th>Good</th>
+            <th>Fair</th>
+            <th>Poor</th>
+            <th>Very Poor</th>
+          </tr>
+          <tr>
+            <td class="first-col">How would you rate your overall experience with our service?</td>
+            <td><input type="radio" value="none" name="rate" /></td>
+            <td><input type="radio" value="none" name="rate" /></td>
+            <td><input type="radio" value="none" name="rate" /></td>
+            <td><input type="radio" value="none" name="rate" /></td>
+            <td><input type="radio" value="none" name="rate" /></td>
+          </tr>
+          <tr>
+            <td class="first-col">How satisfied are you with the report?</td>
+            <td><input type="radio" value="none" name="satisfied" /></td>
+            <td><input type="radio" value="none" name="satisfied" /></td>
+            <td><input type="radio" value="none" name="satisfied" /></td>
+            <td><input type="radio" value="none" name="satisfied" /></td>
+            <td><input type="radio" value="none" name="satisfied" /></td>
+          </tr>
+          <tr>
+            <td class="first-col">Would you recommend our product / service to other people?</td>
+            <td><input type="radio" value="none" name="recommend" /></td>
+            <td><input type="radio" value="none" name="recommend" /></td>
+            <td><input type="radio" value="none" name="recommend" /></td>
+            <td><input type="radio" value="none" name="recommend" /></td>
+            <td><input type="radio" value="none" name="recommend" /></td>
+          </tr>
+        </table>
+        <br>
+        <textarea align="center" rows="3" placeholder="What should we change in order to live up to your expectations?"></textarea>
+        <div class="btn-block">
+          <button type="submit">Send Feedback</button>
+        </div>
+      </form>
+    </div>
+      </center>
+    </div>
+    </center>
+  </section>
+  
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p><i class="fa fa-copyright"></i> Copyright 2021 by Team Tech-Smashers
+          
+           | Design: <a href="http://adi160568.unaux.com" rel="sponsored" target="_parent">TeamNxt</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="{% static 'assets/js/isotope.min.js' %}"></script>
+    <script src="{% static 'assets/js/owl-carousel.js' %}"></script>
+    <script src="{% static 'assets/js/lightbox.js' %}"></script>
+    <script src="{% static 'assets/js/tabs.js' %}"></script>
+    <script src="{% static 'assets/js/video.js' %}"></script>
+    <script src="{% static 'assets/js/slick-slider.js' %}"></script>
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script>
+        //according to loftblog tut
+        $('.nav li:first').addClass('active');
+
+        var showSection = function showSection(section, isAnimate) {
+          var
+          direction = section.replace(/#/, ''),
+          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+          reqSectionPos = reqSection.offset().top - 0;
+
+          if (isAnimate) {
+            $('body, html').animate({
+              scrollTop: reqSectionPos },
+            800);
+          } else {
+            $('body, html').scrollTop(reqSectionPos);
+          }
+
+        };
+
+        var checkSection = function checkSection() {
+          $('.section').each(function () {
+            var
+            $this = $(this),
+            topEdge = $this.offset().top - 80,
+            bottomEdge = topEdge + $this.height(),
+            wScroll = $(window).scrollTop();
+            if (topEdge < wScroll && bottomEdge > wScroll) {
+              var
+              currentId = $this.data('section'),
+              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+              reqLink.closest('li').addClass('active').
+              siblings().removeClass('active');
+            }
+          });
+        };
+
+        $('.main-menu, .scroll-to-section').on('click', 'a', function (e) {
+          if($(e.target).hasClass('external')) {
+            return;
+          }
+          e.preventDefault();
+          $('#menu').removeClass('active');
+          showSection($(this).attr('href'), true);
+        });
+
+        $(window).scroll(function () {
+          checkSection();
+        });
+    </script>
+    <style type="text/css">
+             fieldset {
+                font-family: sans-serif;
+                border: 5px solid #1F497D;
+                background: #ddd;
+                border-radius: 5px;
+                padding: 15px;
+            }
+
+            fieldset legend {
+                background: #1F497D;
+                color: #fff;
+                padding: 5px 10px ;
+                font-size: 32px;
+                border-radius: 5px;
+                box-shadow: 0 0 0 5px #ddd;
+                margin-left: 20px;
+            }
+            .styled-table {
+              border-collapse: collapse;
+              margin: 25px 0;
+              font-size: 0.9em;
+              font-family: sans-serif;
+              min-width: 400px;
+              box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+          }
+          .styled-table thead {
+            background-color: #21244b;
+            color: white;
+        }
+          .styled-table thead tr {
+            background-color: #000000;
+            color: #ddd;
+            text-align: left;
+        }
+        .styled-table th,
+        .styled-table td {
+          background-color: #ddd;
+          color: #000000;
+          padding: 12px 15px;
+          }
+
+          .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+        </style>
+</body>
+</html>

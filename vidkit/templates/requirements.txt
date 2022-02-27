@@ -1,0 +1,10 @@
+scenedetect[opencv]
+pytube3
+pafy
+youtube-dl
+SpeechRecognition pydub
+transformers
+SentencePiece
+fpdf
+pdfkit
+wkhtmltopdf
